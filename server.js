@@ -100,6 +100,7 @@ app.get('/api/callback', function(req, res) {
 
     request.post(authOptions, function(error, response, body) {
       if (!error && response.statusCode === 200) {
+        console.log(body.access_token)
         const resObj = {
           accessToken: body.access_token,
           expiresIn: body.expires_in,
