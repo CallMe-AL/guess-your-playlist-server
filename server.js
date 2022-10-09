@@ -29,9 +29,15 @@ const app = express();
 
 app.use(express.static(path.join(__dirname, 'client/build')))
   .use(cookieParser())
-  .use(cors({credentials: true, origin: redirectUri}))   
+  // .use(cors({credentials: true, origin: redirectUri}))   
   .use(express.json())
   .use(express.urlencoded({ extended: true }));
+
+app.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", redirectUri);
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
+});
 
 // // Handle React routing, return all requests to React app
 // app.get('/*', function(req, res) {
@@ -45,7 +51,6 @@ app.get('/hello', function(req, res) {
 
 // *** authorization ***
 app.get('/login-spotify', function(req, res) {
-  console.log(redirectUri);
   const authEndPoint = "https://accounts.spotify.com/authorize";
   // const state = require("crypto").randomBytes(64).toString('hex');
   const state = generateRandomString(16);
@@ -80,7 +85,7 @@ app.get('/api/callback', function(req, res) {
   // const storedState = req.cookies ? req.cookies[stateKey] : null;
 
   if (state === null) {
-    res.redirect('/#error=state_mismatch');
+    res.redirect(redirectUri + '/#error=state_mismatch');
   } else {    
     // res.clearCookie(stateKey);
     const authOptions = {
@@ -107,7 +112,7 @@ app.get('/api/callback', function(req, res) {
         }
         res.json(resObj);
       } else {
-        res.redirect(clientId + '/?error=invalid_token');
+        res.redirect(redirectUri + '/?error=invalid_token');
       }
     });
   }
