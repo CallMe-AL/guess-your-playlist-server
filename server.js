@@ -28,10 +28,10 @@ const generateRandomString = function(length) {
 const app = express();
 
 app.use(express.static(path.join(__dirname, 'client/build')))
-   .use(cookieParser())
-   .use(cors({credentials: true, origin: redirectUri}))   
-   .use(express.json())
-   .use(express.urlencoded({ extended: true }));
+  .use(cookieParser())
+  .use(cors({credentials: true, origin: redirectUri}))   
+  .use(express.json())
+  .use(express.urlencoded({ extended: true }));
 
 // // Handle React routing, return all requests to React app
 // app.get('/*', function(req, res) {
