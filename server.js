@@ -144,10 +144,6 @@ app.get('/api/refresh_token', function(req, res) {
   });
 });
 
-// app.get('/api/' + clientId + '/?error=invalid_token', function(req, res) {
-//   res.send(req.statusCode, 'Error, try logging in again.');
-// });
-
 app.listen(PORT, () => {
   console.log(`listening on ${PORT}`)
 });
