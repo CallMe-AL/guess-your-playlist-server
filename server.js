@@ -92,6 +92,7 @@ app.get('/api/callback', function(req, res) {
         grant_type: 'authorization_code'
       },
       headers: {
+        'Access-Control-Allow-Origin': "https://guess-your-playlist.onrender.com/",
         'Authorization': 'Basic ' + (Buffer.from(clientId + ':' + clientSecret).toString('base64')),
         'Content-Type': 'application/x-www-form-urlencoded'
       },
@@ -100,7 +101,6 @@ app.get('/api/callback', function(req, res) {
 
     request.post(authOptions, function(error, response, body) {
       if (!error && response.statusCode === 200) {
-        console.log(body.access_token)
         const resObj = {
           accessToken: body.access_token,
           expiresIn: body.expires_in,
