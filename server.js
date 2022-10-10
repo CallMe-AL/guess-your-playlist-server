@@ -85,7 +85,7 @@ app.get('/api/callback', function(req, res) {
   // const storedState = req.cookies ? req.cookies[stateKey] : null;
 
   if (state === null) {
-    res.redirect(redirectUri + '/#error=state_mismatch');
+    res.redirect('/#error=state_mismatch');
   } else {    
     // res.clearCookie(stateKey);
     const authOptions = {
